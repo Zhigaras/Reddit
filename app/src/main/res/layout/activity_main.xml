@@ -11,13 +11,13 @@
         android:id="@+id/nav_host_fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigationBar"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         app:defaultNavHost="true"
-        android:layout_above="@id/bottomNavigationBar"
-        app:navGraph="@navigation/bottom_navigation" />
+        app:navGraph="@navigation/main_navigation_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationBar"

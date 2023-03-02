@@ -1,35 +1,38 @@
 package com.zhigaras.reddit.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zhigaras.reddit.R
-import com.zhigaras.reddit.databinding.ActivityMainBinding
-import com.zhigaras.reddit.presentation.screens.SubredditsFragment
 
 class MainActivity : AppCompatActivity() {
     
-    private lateinit var binding: ActivityMainBinding
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
         
-        val bottomNavView = binding.bottomNavigationBar
+        val bottomTabSet = setOf(R.id.subreddits, R.id.favorites, R.id.profile)
         
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.subreddits, R.id.favorites, R.id.profile)
+            bottomTabSet
         )
+        val bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavView.setupWithNavController(navController)
+        
+        val destinationChangesListener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                bottomNavView.isVisible = bottomTabSet.contains(destination.id) }
+        
+        navController.addOnDestinationChangedListener(destinationChangesListener)
     }
-    
 }

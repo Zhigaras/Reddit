@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/start_fragment">
+
+    <include app:graph="@navigation/bottom_navigation" />
+
+    <fragment
+        android:id="@+id/start_fragment"
+        android:name="com.zhigaras.reddit.presentation.screens.StartFragment"
+        android:label="Start"
+        android:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/from_start_to_onboarding"
+            app:destination="@id/onboarding_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboarding_fragment"
+        android:name="com.zhigaras.reddit.presentation.screens.OnboardingFragment"
+        android:label="Onboarding"
+        android:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/from_onboarding_to_main"
+            app:destination="@id/bottom_navigation"/>
+    </fragment>
+
+</navigation>
