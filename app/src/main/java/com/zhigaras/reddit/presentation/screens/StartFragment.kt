@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.zhigaras.reddit.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartFragment : Fragment() {
     
     override fun onCreateView(
@@ -27,5 +29,4 @@ class StartFragment : Fragment() {
             
         }
     }
-    
 }

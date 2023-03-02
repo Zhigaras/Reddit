@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.zhigaras.reddit.R
 
+@AndroidEntryPoint
 class OnboardingFragment : Fragment() {
     
     override fun onCreateView(
