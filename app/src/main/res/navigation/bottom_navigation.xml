@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/subreddits">
+
+    <fragment
+        android:id="@+id/subreddits"
+        android:name="com.zhigaras.reddit.presentation.screens.SubredditsFragment"
+        android:label="Subreddits"
+        android:layout="@layout/fragment_subreddits"/>
+
+    <fragment
+        android:id="@+id/favorites"
+        android:name="com.zhigaras.reddit.presentation.screens.FavoriteFragment"
+        android:label="Favorite"
+        android:layout="@layout/fragment_favorite"/>
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.zhigaras.reddit.presentation.screens.ProfileFragment"
+        android:label="Profile"
+        android:layout="@layout/fragment_profile"/>
+
+</navigation>
