@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zhigaras.reddit.R
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             bottomTabSet
         )
         val bottomNavView = findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavView.setupWithNavController(navController)
         
         val destinationChangesListener =

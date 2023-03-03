@@ -3,4 +3,13 @@
     <string name="subreddits">Subreddits</string>
     <string name="favorite">Favorite</string>
     <string name="profile">Profile</string>
+    <string name="skip">Skip</string>
+    <string name="onboarding_title_1">Welcome to Reddit</string>
+    <string name="onboarding_title_2" translatable="false">SubReddits</string>
+    <string name="onboarding_title_3">Share and Save</string>
+    <string name="onboarding_text_1">Here are communities of all kinds of interests</string>
+    <string name="onboarding_text_2">You can find new subs by interests and see the subs you subscribe to</string>
+    <string name="onboarding_text_3">Favorites tab stores bookmarks with comments and subs. In your profile you will find information about yourself.</string>
+    <string name="auth_text">Find like-minded people with Reddit</string>
+    <string name="enter">Enter</string>
 </resources>

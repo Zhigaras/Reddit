@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="blue_text">
+        <item name="android:textColor">@color/purple_700</item>
+    </style>
+
+    <style name="blue_alpha_text" parent="blue_text">
+        <item name="android:textColor">@color/purple_700_alpha</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="bold_blue_head_text" parent="blue_text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="onboarding_head">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+</resources>

@@ -16,7 +16,7 @@ import net.openid.appauth.TokenRequest
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     @ApplicationContext app: Context,
     
     ) : ViewModel() {

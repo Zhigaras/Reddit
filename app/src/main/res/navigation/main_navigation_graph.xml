@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
     app:startDestination="@id/start_fragment">
 
@@ -14,6 +15,9 @@
         <action
             android:id="@+id/from_start_to_onboarding"
             app:destination="@id/onboarding_fragment"/>
+        <action
+            android:id="@+id/from_start_to_main"
+            app:destination="@id/bottom_navigation"/>
     </fragment>
 
     <fragment
@@ -22,8 +26,16 @@
         android:label="Onboarding"
         android:layout="@layout/fragment_onboarding" >
         <action
-            android:id="@+id/from_onboarding_to_main"
-            app:destination="@id/bottom_navigation"/>
+            android:id="@+id/from_onboarding_to_auth"
+            app:destination="@id/auth_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/auth_fragment"
+        android:name="com.zhigaras.reddit.presentation.screens.AuthFragment"
+        android:label="Auth"
+        tools:layout="@layout/fragment_auth">
+
     </fragment>
 
 </navigation>

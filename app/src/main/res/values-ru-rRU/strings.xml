@@ -4,4 +4,12 @@
     <string name="subreddits">Сабреддиты</string>
     <string name="favorite">Избранное</string>
     <string name="profile">Профиль</string>
+    <string name="skip">Пропустить</string>
+    <string name="onboarding_text_1">Здесь собраны сообщества по всевозможным интересам</string>
+    <string name="onboarding_title_1">Добро пожаловать в Reddit</string>
+    <string name="onboarding_title_3">Делись и сохраняй</string>
+    <string name="onboarding_text_2">Ты можешь найти новые сабы по интересам и посмотреть сабы, на которые подписан</string>
+    <string name="onboarding_text_3">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.</string>
+    <string name="auth_text">Найди единомышленников с Reddit</string>
+    <string name="enter">Войти</string>
 </resources>
