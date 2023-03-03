@@ -5,12 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
 import com.zhigaras.reddit.R
+import com.zhigaras.reddit.presentation.viewModels.OnboardingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OnboardingFragment : Fragment() {
+    
+    private val viewModel: OnboardingViewModel by viewModels()
+    
+    private val authLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val intentData = it.data ?:return@registerForActivityResult
+            viewModel.handleAuthResponseIntent(intentData)
+        }
+    
+    fun openAuthPage() = viewModel.prepareAuthPageIntent { authLauncher.launch(it) }
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +37,9 @@ class OnboardingFragment : Fragment() {
         
         val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            findNavController().navigate(R.id.from_onboarding_to_main)
+            openAuthPage()
         }
     }
     
-
     
 }
