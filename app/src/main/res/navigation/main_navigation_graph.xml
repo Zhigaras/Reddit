@@ -35,6 +35,9 @@
         android:name="com.zhigaras.reddit.presentation.screens.AuthFragment"
         android:label="Auth"
         tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/from_auth_to_main"
+            app:destination="@id/bottom_navigation"/>
 
     </fragment>
 

@@ -12,4 +12,5 @@
     <string name="onboarding_text_3">Favorites tab stores bookmarks with comments and subs. In your profile you will find information about yourself.</string>
     <string name="auth_text">Find like-minded people with Reddit</string>
     <string name="enter">Enter</string>
+    <string name="authcode_receiving_error">Auth code receiving error</string>
 </resources>

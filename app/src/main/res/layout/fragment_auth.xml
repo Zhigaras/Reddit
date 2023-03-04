@@ -1,44 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/auth_screen_background"
-    android:orientation="vertical"
-    tools:context=".presentation.screens.AuthFragment">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight=".5"
-        android:src="@drawable/auth_image" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_screen_background"
+        android:orientation="vertical"
+        tools:context=".presentation.screens.AuthFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight=".1"
-        android:layout_marginTop="40dp"
-        android:text="@string/app_name"
-        android:textAppearance="@style/onboarding_head"
-        android:textSize="50sp" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight=".5"
+            android:src="@drawable/auth_image" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight=".1"
-        android:layout_gravity="center"
-        android:text="@string/auth_text"
-        android:textColor="@color/black" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_weight=".1"
+            android:text="@string/app_name"
+            android:textAppearance="@style/onboarding_head"
+            android:textSize="50sp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="150dp"
-        android:layout_margin="40dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/enter"
-        app:cornerRadius="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight=".1"
+            android:text="@string/auth_text"
+            android:textColor="@color/black" />
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/auth_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="40dp"
+            android:text="@string/enter"
+            app:cornerRadius="20dp" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@color/semi_transparent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+</FrameLayout>

@@ -12,4 +12,5 @@
     <string name="onboarding_text_3">Вкладка избранное хранит закладки с комментариями и сабами. В профиле ты найдёшь информацию о себе.</string>
     <string name="auth_text">Найди единомышленников с Reddit</string>
     <string name="enter">Войти</string>
+    <string name="authcode_receiving_error">Ошибка получения кода авторизации</string>
 </resources>
