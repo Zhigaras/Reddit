@@ -20,4 +20,13 @@
         <item name="android:textStyle">bold</item>
     </style>
     
+    <style name="SearchTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/purple_500</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/searchBarCornerRadius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/searchBarCornerRadius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/searchBarCornerRadius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/searchBarCornerRadius</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+    
 </resources>

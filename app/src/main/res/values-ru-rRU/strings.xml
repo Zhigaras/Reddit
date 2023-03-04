@@ -13,4 +13,5 @@
     <string name="auth_text">Найди единомышленников с Reddit</string>
     <string name="enter">Войти</string>
     <string name="authcode_receiving_error">Ошибка получения кода авторизации</string>
+    <string name="search">Поиск</string>
 </resources>
