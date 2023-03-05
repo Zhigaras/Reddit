@@ -9,9 +9,9 @@ import com.zhigaras.reddit.databinding.OnboardingPageBinding
 
 class OnboardingViewPagerAdapter(
     private val onSkipClick: () -> Unit
-) : RecyclerView.Adapter<PagerViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-        return PagerViewHolder(
+) : RecyclerView.Adapter<OnboardingPagerViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingPagerViewHolder {
+        return OnboardingPagerViewHolder(
             OnboardingPageBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -22,7 +22,7 @@ class OnboardingViewPagerAdapter(
     
     override fun getItemCount() = MAX_PAGE
     
-    override fun onBindViewHolder(holder: PagerViewHolder, position: Int) = holder.itemView.run {
+    override fun onBindViewHolder(holder: OnboardingPagerViewHolder, position: Int) = holder.itemView.run {
         with(holder.binding) {
             when (position) {
                 0 -> {
@@ -55,4 +55,4 @@ class OnboardingViewPagerAdapter(
     }
 }
 
-class PagerViewHolder(val binding: OnboardingPageBinding) : RecyclerView.ViewHolder(binding.root)
+class OnboardingPagerViewHolder(val binding: OnboardingPageBinding) : RecyclerView.ViewHolder(binding.root)

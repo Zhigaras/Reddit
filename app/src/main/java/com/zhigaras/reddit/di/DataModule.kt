@@ -6,7 +6,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.zhigaras.reddit.data.locale.DataStoreManager
-import com.zhigaras.reddit.data.locale.RedditApi
+import com.zhigaras.reddit.data.remote.AuthInterceptor
+import com.zhigaras.reddit.data.remote.RedditApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,13 +34,16 @@ class DataModule {
     
     @Provides
     @Singleton
-    fun providesRetrofit(): RedditApi {
+    fun providesRetrofit(dataStoreManager: DataStoreManager.Base): RedditApi {
         return Retrofit.Builder()
             .baseUrl(RedditApi.BASE_URL)
-            .client(OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().also {
-                    it.level = HttpLoggingInterceptor.Level.BODY
-                }).build()
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(AuthInterceptor(dataStoreManager))
+                    .addInterceptor(HttpLoggingInterceptor().also {
+                        it.level = HttpLoggingInterceptor.Level.BODY
+                    })
+                    .build()
             )
             .addConverterFactory(MoshiConverterFactory.create())
             .build()

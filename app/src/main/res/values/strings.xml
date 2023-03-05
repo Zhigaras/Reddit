@@ -14,4 +14,5 @@
     <string name="enter">Enter</string>
     <string name="authcode_receiving_error">Auth code receiving error</string>
     <string name="search">Search</string>
+    <string name="subscribed">Subscribed: %1$s</string>
 </resources>

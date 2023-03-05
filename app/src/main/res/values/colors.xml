@@ -8,6 +8,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#E32828</color>
+    <color name="green">#1DB612</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="semi_transparent">#85FFFFFF</color>
     <color name="mtrl_textinput_default_box_stroke_color">#FF6200EE</color>

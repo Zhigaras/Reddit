@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authService: AuthorizationService,
-    private val mainRepository: MainRepository.Base,
+    private val mainRepository: MainRepository,
     private val communication: Communication.Base<ApiResult<UiText>>
 ) : ViewModel() {
     

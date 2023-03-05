@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StartViewModel @Inject constructor(
-    private val mainRepository: MainRepository.Base,
+    private val mainRepository: MainRepository,
     private val communication: Communication.Base<Boolean>
 ) : ViewModel() {
     
