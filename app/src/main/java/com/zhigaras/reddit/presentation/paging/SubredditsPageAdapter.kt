@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.SubredditItemBinding
+import com.zhigaras.reddit.domain.formatDecimalSeparator
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
@@ -19,7 +20,10 @@ class SubredditsPageAdapter :
         with(holder.binding) {
             name.text = item.displayName
             description.text = item.publicDescription
-            subscribers.text = UiText.ResourceString(R.string.subscribed, item.subscribers)
+            subscribers.text = UiText.ResourceString(
+                R.string.subscribed,
+                item.subscribers.formatDecimalSeparator()
+            )
                 .asString(holder.itemView.context)
             if (item.userIsSubscriber) {
                 followButton.apply {
@@ -27,15 +31,15 @@ class SubredditsPageAdapter :
                     setColorFilter(context.getColor(R.color.red))
                 }
                 
-            }else {
+            } else {
                 followButton.apply {
                     setImageResource(R.drawable.ic_follow)
                     setColorFilter(context.getColor(R.color.green))
                 }
             }
-            
             Glide.with(logo.context)
                 .load(item.logo)
+                .placeholder(R.drawable.reddit_placeholder)
                 .circleCrop()
                 .into(logo)
         }

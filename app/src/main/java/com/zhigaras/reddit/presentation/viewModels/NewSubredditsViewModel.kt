@@ -18,7 +18,7 @@ class NewSubredditsViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
     
-    private val newSubredditsQuery = "new"
+    private val newSubredditsQuery = "popular"
     
     val pagedNewSubreddits: Flow<PagingData<SubredditEntity>> = Pager(
         config = PagingConfig(pageSize = 25), /// TODO:
