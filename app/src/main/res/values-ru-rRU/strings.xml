@@ -15,4 +15,5 @@
     <string name="authcode_receiving_error">Ошибка получения кода авторизации</string>
     <string name="search">Поиск</string>
     <string name="subscribed">Подписано: %1$s</string>
+    <string name="loading_error">Ошибка загрузки. Проверьте соединение и попробуйте снова.</string>
 </resources>

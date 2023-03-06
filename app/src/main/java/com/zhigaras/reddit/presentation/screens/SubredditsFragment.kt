@@ -1,15 +1,17 @@
 package com.zhigaras.reddit.presentation.screens
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditsBinding
+import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.SubredditsPageAdapter
@@ -38,6 +40,7 @@ class SubredditsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         setUpPageAdapter()
+        setupLoadStates()
     }
     
     override fun onDestroy() {
@@ -46,14 +49,22 @@ class SubredditsFragment : Fragment() {
     }
     
     fun setupLoadStates() {
+        binding.swipeRefresh.setOnRefreshListener {
+            subredditsPageAdapter.refresh()
+        }
         subredditsPageAdapter.loadStateFlow.onEach {
-            val loadStateList = listOf(it.append, it.refresh, it.prepend)
-            loadStateList.forEach {loadState ->
-                if (loadState is LoadState.Loading) {
-                
+            binding.swipeRefresh.isRefreshing = it.refresh == LoadState.Loading
+            listOf(it.append, it.prepend, it.refresh).forEach { loadState ->
+                if (loadState is LoadState.Error) {
+                    showToast(
+                        loadState.error.localizedMessage
+                            ?: UiText.ResourceString(R.string.loading_error)
+                                .asString(requireContext())
+                    )
                 }
             }
-        }
+            
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
     
     fun setUpPageAdapter() {
@@ -72,5 +83,9 @@ class SubredditsFragment : Fragment() {
         viewModel.pagedNewSubreddits.onEach {
             subredditsPageAdapter.submitData(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+    
+    fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 }

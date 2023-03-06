@@ -15,4 +15,5 @@
     <string name="authcode_receiving_error">Auth code receiving error</string>
     <string name="search">Search</string>
     <string name="subscribed">Subscribed: %1$s</string>
+    <string name="loading_error">Loading error. Check your internet connection and try again</string>
 </resources>
