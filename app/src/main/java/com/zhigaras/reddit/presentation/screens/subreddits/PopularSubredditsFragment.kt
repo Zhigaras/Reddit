@@ -1,4 +1,4 @@
-package com.zhigaras.reddit.presentation.screens
+package com.zhigaras.reddit.presentation.screens.subreddits
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,21 +10,21 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.zhigaras.reddit.R
-import com.zhigaras.reddit.databinding.FragmentSubredditsBinding
+import com.zhigaras.reddit.databinding.FragmentPopularSubredditsBinding
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.SubredditsPageAdapter
-import com.zhigaras.reddit.presentation.viewModels.NewSubredditsViewModel
+import com.zhigaras.reddit.presentation.viewModels.subreddits.PopularSubredditsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class SubredditsFragment : Fragment() {
+class PopularSubredditsFragment : Fragment() {
     
-    private val viewModel: NewSubredditsViewModel by viewModels()
-    private var _binding: FragmentSubredditsBinding? = null
+    private val viewModel: PopularSubredditsViewModel by viewModels()
+    private var _binding: FragmentPopularSubredditsBinding? = null
     private val binding get() = _binding!!
     private val subredditsPageAdapter = SubredditsPageAdapter()
     
@@ -32,7 +32,7 @@ class SubredditsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSubredditsBinding.inflate(inflater, container, false)
+        _binding = FragmentPopularSubredditsBinding.inflate(inflater, container, false)
         return binding.root
     }
     
@@ -88,4 +88,5 @@ class SubredditsFragment : Fragment() {
     fun showToast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
+    
 }

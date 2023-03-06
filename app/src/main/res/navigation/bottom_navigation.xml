@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/subreddits"
-        android:name="com.zhigaras.reddit.presentation.screens.SubredditsFragment"
+        android:name="com.zhigaras.reddit.presentation.screens.subreddits.SubredditsFragment"
         android:label="Subreddits"
         android:layout="@layout/fragment_subreddits"/>
 

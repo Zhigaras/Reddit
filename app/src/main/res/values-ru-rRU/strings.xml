@@ -16,4 +16,6 @@
     <string name="search">Поиск</string>
     <string name="subscribed">Подписано: %1$s</string>
     <string name="loading_error">Ошибка загрузки. Проверьте соединение и попробуйте снова.</string>
+    <string name="new_title">Новые</string>
+    <string name="popular_title">Популярные</string>
 </resources>
