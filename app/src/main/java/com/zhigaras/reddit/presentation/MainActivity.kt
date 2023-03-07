@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        val bottomTabSet = setOf(R.id.subreddits, R.id.favorites, R.id.profile)
+        val bottomTabSet = setOf(R.id.subreddits_tab_nav_graph, R.id.favorites, R.id.profile)
         
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         
         val destinationChangesListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                bottomNavView.isVisible = bottomTabSet.contains(destination.id) }
+                bottomNavView.isVisible = true }
         
         navController.addOnDestinationChangedListener(destinationChangesListener)
     }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditsGenericBinding
@@ -23,7 +24,14 @@ abstract class AbstractSubredditsFragment : Fragment(){
     protected abstract val viewModel: ViewModel
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
-    protected val subredditsPageAdapter = SubredditsPageAdapter()
+    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToDetails() }
+    
+    
+    abstract fun observePagerFlow()
+    
+    fun navigateToDetails(){
+        findNavController().navigate(R.id.from_main_subreddits_to_posts)
+    }
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,8 +84,6 @@ abstract class AbstractSubredditsFragment : Fragment(){
             
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
-    
-    abstract fun observePagerFlow()
     
     fun showToast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

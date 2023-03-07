@@ -2,13 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_navigation"
-    app:startDestination="@id/subreddits">
+    app:startDestination="@id/subreddits_tab_nav_graph">
 
-    <fragment
-        android:id="@+id/subreddits"
-        android:name="com.zhigaras.reddit.presentation.screens.subreddits.SubredditsFragment"
-        android:label="Subreddits"
-        android:layout="@layout/fragment_subreddits"/>
+    <include app:graph="@navigation/subreddits_tab_nav_graph"/>
 
     <fragment
         android:id="@+id/favorites"

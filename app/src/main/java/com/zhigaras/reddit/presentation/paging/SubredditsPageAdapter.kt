@@ -12,7 +12,9 @@ import com.zhigaras.reddit.domain.formatDecimalSeparator
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
-class SubredditsPageAdapter :
+class SubredditsPageAdapter(
+    private val onItemClick: () -> Unit
+) :
     PagingDataAdapter<SubredditEntity, SubredditViewHolder>(DiffUtilCallback()) {
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
@@ -42,6 +44,9 @@ class SubredditsPageAdapter :
                 .placeholder(R.drawable.reddit_placeholder)
                 .circleCrop()
                 .into(logo)
+            root.setOnClickListener {
+                onItemClick()
+            }
         }
     }
     

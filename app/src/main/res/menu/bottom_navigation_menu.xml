@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/subreddits"
+        android:id="@+id/subreddits_tab_nav_graph"
         android:enabled="true"
         android:icon="@drawable/ic_text"
         android:title="@string/subreddits">
