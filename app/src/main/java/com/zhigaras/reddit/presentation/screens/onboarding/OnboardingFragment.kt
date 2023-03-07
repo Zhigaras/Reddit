@@ -1,4 +1,4 @@
-package com.zhigaras.reddit.presentation.screens
+package com.zhigaras.reddit.presentation.screens.onboarding
 
 import android.os.Bundle
 import android.view.LayoutInflater

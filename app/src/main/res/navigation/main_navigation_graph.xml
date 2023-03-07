@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/onboarding_fragment"
-        android:name="com.zhigaras.reddit.presentation.screens.OnboardingFragment"
+        android:name="com.zhigaras.reddit.presentation.screens.onboarding.OnboardingFragment"
         android:label="Onboarding"
         android:layout="@layout/fragment_onboarding" >
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/auth_fragment"
-        android:name="com.zhigaras.reddit.presentation.screens.AuthFragment"
+        android:name="com.zhigaras.reddit.presentation.screens.onboarding.AuthFragment"
         android:label="Auth"
         tools:layout="@layout/fragment_auth">
         <action

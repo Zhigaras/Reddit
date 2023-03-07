@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.screens.OnboardingFragment">
+    tools:context=".presentation.screens.onboarding.OnboardingFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

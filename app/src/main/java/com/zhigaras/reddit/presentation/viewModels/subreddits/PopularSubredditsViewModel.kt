@@ -18,10 +18,10 @@ class PopularSubredditsViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
     
-    private val newSubredditsQuery = "popular"
+    private val popularSubredditsQuery = "popular"
     
-    val pagedNewSubreddits: Flow<PagingData<SubredditEntity>> = Pager(
+    val pagedPopularSubreddits: Flow<PagingData<SubredditEntity>> = Pager(
         config = PagingConfig(pageSize = 25),
-        pagingSourceFactory = { SubredditsPagingSource(mainRepository, newSubredditsQuery) }
+        pagingSourceFactory = { SubredditsPagingSource(mainRepository, popularSubredditsQuery) }
     ).flow.cachedIn(viewModelScope)
 }

@@ -17,4 +17,9 @@ interface RedditApi {
         @Query("after") afterKey: String
     ): Response<SubredditsResponse>
     
+    @GET("/subreddits/search")
+    suspend fun searchSubreddits(
+        @Query("q") query: String
+    ): Response<SubredditsResponse>
+    
 }

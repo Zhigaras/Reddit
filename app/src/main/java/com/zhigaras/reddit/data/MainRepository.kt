@@ -21,4 +21,8 @@ class MainRepository @Inject constructor(
     suspend fun loadSubreddits(type: String, count: Int, afterKey: String): Response<SubredditsResponse> {
         return redditApi.loadSubreddits(type, count, afterKey)
     }
+    
+    suspend fun loadSearchResults(query: String): Response<SubredditsResponse> {
+        return redditApi.searchSubreddits(query)
+    }
 }
