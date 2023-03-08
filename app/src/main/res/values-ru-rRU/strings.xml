@@ -18,4 +18,8 @@
     <string name="loading_error">Ошибка загрузки. Проверьте соединение и попробуйте снова.</string>
     <string name="new_title">Новые</string>
     <string name="popular_title">Популярные</string>
+    <string name="vote_down">Проголосавть потив</string>
+    <string name="vote_up">Проголосовать за</string>
+    <string name="open_comments">Открыть комментарии</string>
+    <string name="share">Поделиться</string>
 </resources>

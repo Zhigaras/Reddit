@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.screens.subreddits.SubredditPostsFragment">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/button"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="to comments"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/post_item"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

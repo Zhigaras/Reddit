@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:id="@+id/vote_up_button"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/vote_up"
+        android:src="@drawable/baseline_keyboard_arrow_up_24"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="23"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_score"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:background="@color/transparent"
+        android:id="@+id/vote_down_button"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/vote_down"
+        android:src="@drawable/baseline_keyboard_arrow_down_24"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_weight="40"
+        android:layout_height="match_parent"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:background="@color/transparent"
+        android:src="@drawable/baseline_comment_24"
+        android:id="@+id/open_comments_button"
+        android:contentDescription="@string/open_comments" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_weight="50"
+        android:layout_height="wrap_content"
+        android:id="@+id/comments_number"
+        android:text="34"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/share_button"
+        android:layout_weight="1"
+        android:contentDescription="@string/share"
+        android:background="@color/transparent"
+        android:src="@drawable/baseline_share_24"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

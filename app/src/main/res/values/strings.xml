@@ -18,4 +18,8 @@
     <string name="loading_error">Loading error. Check your internet connection and try again</string>
     <string name="new_title">New</string>
     <string name="popular_title">Popular</string>
+    <string name="vote_up">vote Up</string>
+    <string name="vote_down">vote Down</string>
+    <string name="open_comments">open comments</string>
+    <string name="share">share</string>
 </resources>

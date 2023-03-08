@@ -1,5 +1,6 @@
 package com.zhigaras.reddit.data.remote
 
+import com.zhigaras.reddit.data.remote.response.posts.PostsResponse
 import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,4 +23,10 @@ interface RedditApi {
         @Query("q") query: String
     ): Response<SubredditsResponse>
     
+    @GET("/r/{name}")
+    suspend fun getSubredditPosts(
+        @Path("name") subredditName: String,
+        @Query("count") count: Int,
+        @Query("after") afterKey: String
+    ): Response<PostsResponse>
 }

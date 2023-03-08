@@ -24,12 +24,11 @@ abstract class AbstractSubredditsFragment : Fragment(){
     protected abstract val viewModel: ViewModel
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
-    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToDetails() }
-    
+    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToPosts() }
     
     abstract fun observePagerFlow()
     
-    fun navigateToDetails(){
+    fun navigateToPosts(){
         findNavController().navigate(R.id.from_main_subreddits_to_posts)
     }
     
