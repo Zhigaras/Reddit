@@ -1,12 +1,12 @@
-package com.zhigaras.reddit.data.remote.response.subreddits
+package com.zhigaras.reddit.data.remote.response.posts
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Children(
+data class CommonPostsResponse(
     @Json(name = "data")
-    val `data`: SubredditData,
+    val commonData: CommonPostsData,
     @Json(name = "kind")
     val kind: String
 )

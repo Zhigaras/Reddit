@@ -5,8 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.zhigaras.reddit.data.locale.DataStoreManager
 import com.zhigaras.reddit.data.remote.RedditApi
-import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsResponse
-import com.zhigaras.reddit.domain.model.SubredditEntity
+import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsData
+import com.zhigaras.reddit.data.remote.response.subreddits.CommonSubredditsResponse
 import com.zhigaras.reddit.presentation.paging.GenericPagingSource
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -17,7 +17,7 @@ class MainRepository @Inject constructor(
     private val redditApi: RedditApi
 ) {
     
-    fun getPagedSubredditsFlow(query: String): Flow<PagingData<SubredditEntity>> = Pager(
+    fun getPagedSubredditsFlow(query: String): Flow<PagingData<SubredditsData>> = Pager(
         config = PagingConfig(pageSize = 25),
         pagingSourceFactory = { GenericPagingSource(redditApi, query) }
     ).flow
@@ -30,7 +30,7 @@ class MainRepository @Inject constructor(
         return dataStoreManager.checkToken()
     }
     
-    suspend fun loadSearchResults(query: String): Response<SubredditsResponse> {
+    suspend fun loadSearchResults(query: String): Response<CommonSubredditsResponse> {
         return redditApi.searchSubreddits(query)
     }
     

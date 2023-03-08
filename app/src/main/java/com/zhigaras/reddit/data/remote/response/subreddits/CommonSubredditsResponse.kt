@@ -4,7 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CommentContributionSettings(
-    @Json(name = "allowed_media_types")
-    val allowedMediaTypes: List<String>
+data class CommonSubredditsResponse(
+    @Json(name = "data")
+    val commonData: CommonSubredditsData,
+    @Json(name = "kind")
+    val kind: String
 )

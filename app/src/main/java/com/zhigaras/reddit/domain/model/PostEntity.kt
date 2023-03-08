@@ -12,4 +12,4 @@ data class PostEntity(
     val selfText: String,
     val selfUrl: String,
     val isVideo: Boolean
-)
+): AbstractRedditEntity()

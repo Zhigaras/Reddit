@@ -3,10 +3,11 @@ package com.zhigaras.reddit.data.remote.response.subreddits
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.zhigaras.reddit.data.remote.response.MapData
 import com.zhigaras.reddit.domain.model.SubredditEntity
 
 @JsonClass(generateAdapter = true)
-data class SubredditData(
+data class SubredditModel(
 //    @Json(name = "accept_followers")
 //    val acceptFollowers: Boolean,
 //    @Json(name = "accounts_active")
@@ -215,9 +216,9 @@ data class SubredditData(
 //    val wikiEnabled: Any,
 //    @Json(name = "wls")
 //    val wls: Any
-) {
+) : MapData {
     
-    fun toSubredditEntity(): SubredditEntity {
+    override fun map(): SubredditEntity {
         return SubredditEntity(
             id = id,
             displayName = displayNamePrefixed,

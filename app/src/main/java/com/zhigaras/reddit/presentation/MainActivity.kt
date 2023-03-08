@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         
         val destinationChangesListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                bottomNavView.isVisible = true }
+                bottomNavView.isVisible = true
+            }
         
         navController.addOnDestinationChangedListener(destinationChangesListener)
     }
