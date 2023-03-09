@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SubredditsData(
-    @Json(name = "data")
-    val data: SubredditModel,
     @Json(name = "kind")
-    val kind: String
+    val kind: String,
+    @Json(name = "data")
+    val data: SubredditModel
 )

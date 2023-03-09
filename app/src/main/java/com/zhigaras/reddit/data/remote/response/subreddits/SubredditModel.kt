@@ -49,7 +49,7 @@ data class SubredditModel(
 //    @Json(name = "banner_background_image")
 //    val bannerBackgroundImage: String,
     @Json(name = "banner_img")
-    val bannerImg: String,
+    val bannerImg: String?,
 //    @Json(name = "banner_size")
 //    val bannerSize: Any,
 //    @Json(name = "can_assign_link_flair")
@@ -225,7 +225,7 @@ data class SubredditModel(
             subscribers = subscribers,
             userIsSubscriber = userIsSubscriber,
             publicDescription = publicDescription,
-            logo = bannerImg
+            logo = bannerImg ?: ""
         )
     }
 }

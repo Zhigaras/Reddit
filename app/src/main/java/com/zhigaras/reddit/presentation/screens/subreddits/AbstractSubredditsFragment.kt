@@ -19,17 +19,20 @@ import com.zhigaras.reddit.presentation.paging.SubredditsPageAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-abstract class AbstractSubredditsFragment : Fragment(){
+abstract class AbstractSubredditsFragment : Fragment() {
     
     protected abstract val viewModel: ViewModel
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
-    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToPosts() }
+    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToPosts(it) }
     
     abstract fun observePagerFlow()
     
-    fun navigateToPosts(){
-        findNavController().navigate(R.id.from_main_subreddits_to_posts)
+    fun navigateToPosts(subredditId: String) {
+        findNavController().navigate(
+            R.id.from_main_subreddits_to_posts,
+            Bundle().also { it.putString("subredditId", subredditId) }
+        )
     }
     
     override fun onCreateView(
@@ -39,6 +42,7 @@ abstract class AbstractSubredditsFragment : Fragment(){
         _binding = FragmentSubredditsGenericBinding.inflate(inflater, container, false)
         return binding.root
     }
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         

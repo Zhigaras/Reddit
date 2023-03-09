@@ -5,8 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PostsData(
-    @Json(name = "data")
-    val data: PostModel,
     @Json(name = "kind")
-    val kind: String
+    val kind: String,
+    @Json(name = "data")
+    val data: PostModel
 )

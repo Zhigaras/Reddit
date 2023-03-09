@@ -11,5 +11,6 @@ data class PostEntity(
     val saved: Boolean,
     val selfText: String,
     val selfUrl: String,
-    val isVideo: Boolean
+    val isVideo: Boolean,
+    val isLikedByUser: Boolean?
 ): AbstractRedditEntity()

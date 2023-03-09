@@ -2,13 +2,14 @@ package com.zhigaras.reddit.presentation.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.zhigaras.reddit.data.remote.RedditApi
+import com.zhigaras.reddit.data.remote.response.subreddits.CommonSubredditsResponse
 import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsData
+import retrofit2.Response
 import javax.inject.Inject
 
 class GenericPagingSource @Inject constructor(
-    private val redditApi: RedditApi,
-    private val query: String
+    private val query: String,
+    private val apiRequest: suspend (String, String) -> Response<CommonSubredditsResponse>
 ) : PagingSource<String, SubredditsData>() {
     
     override val keyReuseSupported = true
@@ -19,7 +20,7 @@ class GenericPagingSource @Inject constructor(
 
         val after = params.key ?: ""
         return kotlin.runCatching {
-            redditApi.loadSubreddits(type = query, count = params.loadSize, afterKey = after)
+            apiRequest(query, after)
         }.fold(
             onSuccess = {
                 LoadResult.Page(
@@ -29,7 +30,7 @@ class GenericPagingSource @Inject constructor(
                     nextKey = it.body()?.commonData?.after
                 )
             },
-            onFailure = { LoadResult.Error(it) }
+            onFailure = { throw it }
         )
     }
 }

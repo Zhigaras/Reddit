@@ -38,10 +38,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.zhigaras.reddit.presentation.PostBottomLineViewGroup
-            android:id="@+id/bottom_line"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/vote_up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:contentDescription="@string/vote_up"
+                android:src="@drawable/baseline_keyboard_arrow_up_24" />
+
+            <TextView
+                android:id="@+id/post_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="23" />
+
+            <ImageButton
+                android:id="@+id/vote_down_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:contentDescription="@string/vote_down"
+                android:src="@drawable/baseline_keyboard_arrow_down_24" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="40" />
+
+            <ImageButton
+                android:id="@+id/open_comments_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:contentDescription="@string/open_comments"
+                android:src="@drawable/baseline_comment_24" />
+
+            <TextView
+                android:id="@+id/comments_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="34" />
+
+            <ImageButton
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:contentDescription="@string/share"
+                android:src="@drawable/baseline_share_24" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </LinearLayout>
 

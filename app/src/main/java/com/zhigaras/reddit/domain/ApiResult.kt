@@ -12,13 +12,12 @@ sealed class ApiResult<out T>(
         errorMessage = null
     )
     
-    data class Error(
+    data class Error<out T>(
         val exception: UiText
-    ) : ApiResult<Nothing>(
+    ) : ApiResult<T>(
         data = null,
         errorMessage = exception
     )
-    
     
     class Loading<out T> : ApiResult<T>(
         data = null,

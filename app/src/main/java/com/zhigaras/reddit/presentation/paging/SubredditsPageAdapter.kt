@@ -13,9 +13,8 @@ import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
 class SubredditsPageAdapter(
-    private val onItemClick: () -> Unit
-) :
-    PagingDataAdapter<SubredditEntity, SubredditViewHolder>(DiffUtilCallback()) {
+    private val onItemClick: (String) -> Unit
+) : PagingDataAdapter<SubredditEntity, SubredditViewHolder>(SubredditsDiffUtilCallback()) {
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
         val item = getItem(position) ?: return
@@ -45,7 +44,7 @@ class SubredditsPageAdapter(
                 .circleCrop()
                 .into(logo)
             root.setOnClickListener {
-                onItemClick()
+                onItemClick(item.id)
             }
         }
     }
@@ -61,7 +60,7 @@ class SubredditsPageAdapter(
 
 class SubredditViewHolder(val binding: SubredditItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-class DiffUtilCallback : DiffUtil.ItemCallback<SubredditEntity>() {
+class SubredditsDiffUtilCallback : DiffUtil.ItemCallback<SubredditEntity>() {
     override fun areItemsTheSame(oldItem: SubredditEntity, newItem: SubredditEntity): Boolean {
         return oldItem.id == newItem.id
     }
