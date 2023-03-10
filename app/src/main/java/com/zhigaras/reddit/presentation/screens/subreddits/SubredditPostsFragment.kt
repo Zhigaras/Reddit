@@ -56,16 +56,7 @@ class SubredditPostsFragment : Fragment() {
     }
     
     fun setUpPageAdapter() {
-        binding.recyclerView.apply {
-            adapter = postsPageAdapter.withLoadStateFooter(PageLoadStateAdapter())
-            addItemDecoration(
-                MarginItemDecoration(
-                    resources.getDimensionPixelSize(
-                        R.dimen.recyclerview_dimen
-                    )
-                )
-            )
-        }
+        binding.recyclerView.adapter = postsPageAdapter.withLoadStateFooter(PageLoadStateAdapter())
     }
     
     fun setupLoadStates() {

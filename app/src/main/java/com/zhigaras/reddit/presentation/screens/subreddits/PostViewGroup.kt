@@ -55,7 +55,7 @@ class PostViewGroup @JvmOverloads constructor(
     fun setupShareClickListener(post: PostEntity) {
         binding.shareButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).also {
-                it.putExtra(Intent.EXTRA_TEXT, post.selfUrl) //TODO
+                it.putExtra(Intent.EXTRA_TEXT, post.selfUrl)
                 it.type = "text/plain"
             }
             try {

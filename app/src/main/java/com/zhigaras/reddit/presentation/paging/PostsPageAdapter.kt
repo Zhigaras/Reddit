@@ -1,5 +1,6 @@
 package com.zhigaras.reddit.presentation.paging
 
+import android.app.ActionBar.LayoutParams
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +17,10 @@ class PostsPageAdapter(
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         
         val item = getItem(position) ?: return
+        
+        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        
+        holder.viewGroup.layoutParams = layoutParams
         
         holder.viewGroup.setupView(
             post = item,
