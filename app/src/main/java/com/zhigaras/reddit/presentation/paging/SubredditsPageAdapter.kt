@@ -19,7 +19,7 @@ class SubredditsPageAdapter(
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
         val item = getItem(position) ?: return
         with(holder.binding) {
-            name.text = item.displayName
+            name.text = item.displayNamePrefixed
             description.text = item.publicDescription
             subscribers.text = UiText.ResourceString(
                 R.string.subscribed,
@@ -44,7 +44,7 @@ class SubredditsPageAdapter(
                 .circleCrop()
                 .into(logo)
             root.setOnClickListener {
-                onItemClick(item.id)
+                onItemClick(item.displayName)
             }
         }
     }

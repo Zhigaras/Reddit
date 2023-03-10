@@ -1,15 +1,22 @@
 package com.zhigaras.reddit.presentation.viewModels.subreddits
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.zhigaras.reddit.data.MainRepository
+import com.zhigaras.reddit.data.remote.response.posts.PostModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 @HiltViewModel
 class SubredditPostsViewModel @Inject constructor(
     private val mainRepository: MainRepository
-): ViewModel() {
+) : ViewModel() {
     
-//    fun getPagedPosts(subredditId: String) = mainRepository.getPagedPostsFlow(subredditId)
+    fun getPagedPosts(subredditId: String) = mainRepository.getPagedPostsFlow(subredditId)
+        .transform { pagingData -> emit(pagingData.map { (it.data as PostModel).map() }) }
+        .cachedIn(viewModelScope)
     
 }

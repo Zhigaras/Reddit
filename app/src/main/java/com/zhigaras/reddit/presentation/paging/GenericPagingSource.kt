@@ -2,25 +2,24 @@ package com.zhigaras.reddit.presentation.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.zhigaras.reddit.data.remote.response.subreddits.CommonSubredditsResponse
-import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsData
+import com.zhigaras.reddit.data.remote.response.CommonResponse
+import com.zhigaras.reddit.data.remote.response.Thing
 import retrofit2.Response
 import javax.inject.Inject
 
 class GenericPagingSource @Inject constructor(
-    private val query: String,
-    private val apiRequest: suspend (String, String) -> Response<CommonSubredditsResponse>
-) : PagingSource<String, SubredditsData>() {
+    private val apiRequest: suspend (String) -> Response<CommonResponse>
+) : PagingSource<String, Thing>() {
     
     override val keyReuseSupported = true
     
-    override fun getRefreshKey(state: PagingState<String, SubredditsData>): String? = null
+    override fun getRefreshKey(state: PagingState<String, Thing>): String = ""
     
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, SubredditsData> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Thing> {
 
         val after = params.key ?: ""
         return kotlin.runCatching {
-            apiRequest(query, after)
+            apiRequest(after)
         }.fold(
             onSuccess = {
                 LoadResult.Page(

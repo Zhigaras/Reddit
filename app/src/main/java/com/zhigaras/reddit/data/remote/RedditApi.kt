@@ -1,8 +1,7 @@
 package com.zhigaras.reddit.data.remote
 
-import com.zhigaras.reddit.data.remote.response.posts.CommonPostsResponse
+import com.zhigaras.reddit.data.remote.response.CommonResponse
 import com.zhigaras.reddit.data.remote.response.posts.PostsData
-import com.zhigaras.reddit.data.remote.response.subreddits.CommonSubredditsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -18,18 +17,18 @@ interface RedditApi {
     suspend fun loadSubreddits(
         @Path("type") type: String,
         @Query("after") afterKey: String
-    ): Response<CommonSubredditsResponse>
+    ): Response<CommonResponse>
     
     @GET("/subreddits/search")
     suspend fun searchSubreddits(
         @Query("q") query: String
-    ): Response<CommonSubredditsResponse>
+    ): Response<CommonResponse>
     
     @GET("/r/{subredditName}")
-    suspend fun getSubredditPosts(
+    suspend fun loadSubredditPosts(
         @Path("subredditName") subredditName: String,
         @Query("after") afterKey: String
-    ): Response<CommonPostsResponse>
+    ): Response<CommonResponse>
     
     @GET("/r/{subredditName}/comments/{postId}")
     suspend fun getPostDetails(

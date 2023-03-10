@@ -76,8 +76,8 @@ data class SubredditModel(
 //    val descriptionHtml: Any,
 //    @Json(name = "disable_contributor_requests")
 //    val disableContributorRequests: Boolean,
-//    @Json(name = "display_name")
-//    val displayName: String,
+    @Json(name = "display_name")
+    val displayName: String,
     @Json(name = "display_name_prefixed")
     val displayNamePrefixed: String,
 //    @Json(name = "emojis_custom_size")
@@ -221,7 +221,8 @@ data class SubredditModel(
     override fun map(): SubredditEntity {
         return SubredditEntity(
             id = id,
-            displayName = displayNamePrefixed,
+            displayNamePrefixed = displayNamePrefixed,
+            displayName = displayName,
             subscribers = subscribers,
             userIsSubscriber = userIsSubscriber,
             publicDescription = publicDescription,

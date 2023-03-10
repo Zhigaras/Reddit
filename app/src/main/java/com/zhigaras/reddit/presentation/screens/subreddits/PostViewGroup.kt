@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.PostItemBinding
 import com.zhigaras.reddit.domain.model.PostEntity
@@ -15,7 +15,7 @@ class PostViewGroup @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : LinearLayout(context, attrs, defStyle) {
+) : CardView(context, attrs, defStyle) {
     
     private var binding: PostItemBinding
     
@@ -46,6 +46,9 @@ class PostViewGroup @JvmOverloads constructor(
             commentsNumber.text = post.numComments.toString()
             if (post.isLikedByUser == true) voteUpButton.setColorFilter(context.getColor(R.color.green))
             if (post.isLikedByUser == false) voteDownButton.setColorFilter(context.getColor(R.color.red))
+            subreddit.text = post.subreddit
+            author.text = post.author
+            title.text = post.title
         }
     }
     
@@ -79,7 +82,7 @@ class PostViewGroup @JvmOverloads constructor(
         binding.voteUpButton.setOnClickListener {
             if (isLikedByUser == true) onVoteButtonsClick(0)
             else onVoteButtonsClick(1)
-        }
+        } //TODO
         binding.voteDownButton.setOnClickListener {
             if (isLikedByUser == false) onVoteButtonsClick(0)
             else onVoteButtonsClick(-1)

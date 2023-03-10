@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import com.zhigaras.reddit.data.locale.DataStoreManager
 import com.zhigaras.reddit.data.remote.RedditApi
 import com.zhigaras.reddit.data.remote.SafeRemoteRepo
-import com.zhigaras.reddit.data.remote.response.subreddits.CommonSubredditsResponse
-import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsData
+import com.zhigaras.reddit.data.remote.response.CommonResponse
+import com.zhigaras.reddit.data.remote.response.Thing
 import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.presentation.paging.GenericPagingSource
 import kotlinx.coroutines.flow.Flow
@@ -19,23 +19,23 @@ class MainRepository @Inject constructor(
     private val redditApi: RedditApi
 ) : SafeRemoteRepo.BaseRemoteRepo() {
     
-    fun getPagedSubredditsFlow(query: String): Flow<PagingData<SubredditsData>> = Pager(
+    fun getPagedSubredditsFlow(query: String): Flow<PagingData<Thing>> = Pager(
         config = PagingConfig(pageSize = 25),
         pagingSourceFactory = {
-            GenericPagingSource(query) { type, afterKey ->
-                redditApi.loadSubreddits(type, afterKey)
+            GenericPagingSource { afterKey ->
+                redditApi.loadSubreddits(query, afterKey)
             }
         }
     ).flow
     
-//    fun getPagedPostsFlow(query: String): Flow<PagingData<SubredditsData>> = Pager(
-//        config = PagingConfig(pageSize = 25),
-//        pagingSourceFactory = {
-//            GenericPagingSource(query) { type, afterKey ->
-//                redditApi.getSubredditPosts(type, afterKey)
-//            }
-//        }
-//    ).flow
+    fun getPagedPostsFlow(subredditId: String): Flow<PagingData<Thing>> = Pager(
+        config = PagingConfig(pageSize = 25),
+        pagingSourceFactory = {
+            GenericPagingSource { afterKey ->
+                redditApi.loadSubredditPosts(subredditId, afterKey)
+            }
+        }
+    ).flow
     
     suspend fun saveAccessToken(token: String) {
         dataStoreManager.saveToken(token)
@@ -45,7 +45,7 @@ class MainRepository @Inject constructor(
         return dataStoreManager.checkToken()
     }
     
-    suspend fun loadSearchResults(query: String): Response<CommonSubredditsResponse> {
+    suspend fun loadSearchResults(query: String): Response<CommonResponse> {
         return redditApi.searchSubreddits(query)
     }
     

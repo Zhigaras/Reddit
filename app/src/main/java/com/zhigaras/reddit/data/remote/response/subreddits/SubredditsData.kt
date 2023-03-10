@@ -2,11 +2,12 @@ package com.zhigaras.reddit.data.remote.response.subreddits
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.zhigaras.reddit.data.remote.response.Thing
 
 @JsonClass(generateAdapter = true)
 data class SubredditsData(
     @Json(name = "kind")
-    val kind: String,
+    override val kind: String,
     @Json(name = "data")
-    val data: SubredditModel
-)
+    override val data: SubredditModel
+): Thing

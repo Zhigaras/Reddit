@@ -6,10 +6,14 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.zhigaras.reddit.data.locale.DataStoreManager
 import com.zhigaras.reddit.data.remote.AuthInterceptor
 import com.zhigaras.reddit.data.remote.RedditApi
+import com.zhigaras.reddit.data.remote.response.Thing
+import com.zhigaras.reddit.data.remote.response.posts.PostsData
+import com.zhigaras.reddit.data.remote.response.subreddits.SubredditsData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,11 +52,11 @@ class DataModule {
     @Provides
     fun providesMoshi(): Moshi {
         return Moshi.Builder()
-//            .add(
-//                PolymorphicJsonAdapterFactory.of(TestDto::class.java, "kind")
-//                    .withSubtype(SubredditsData::class.java, "t5")
-//                    .withSubtype(PostsData::class.java, "t3")
-//            )
+            .add(
+                PolymorphicJsonAdapterFactory.of(Thing::class.java, "kind")
+                    .withSubtype(SubredditsData::class.java, "t5")
+                    .withSubtype(PostsData::class.java, "t3")
+            )
             .add(KotlinJsonAdapterFactory())
             .build()
     }
