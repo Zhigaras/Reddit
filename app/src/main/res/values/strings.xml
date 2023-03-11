@@ -24,4 +24,5 @@
     <string name="share">share</string>
     <string name="check_connection">Please check your internet connection</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="join">Join</string>
 </resources>
