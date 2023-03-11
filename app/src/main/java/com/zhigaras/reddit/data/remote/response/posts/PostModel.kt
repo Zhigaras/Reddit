@@ -237,7 +237,7 @@ data class PostModel(
 ) : MapData {
     
     override fun map(): PostEntity {
-        return PostEntity(
+        val post = PostEntity(
             subreddit = subredditNamePrefixed,
             author = author,
             date = SimpleDateFormat(
@@ -252,11 +252,12 @@ data class PostModel(
             },
             numComments = numComments,
             saved = saved,
-            selfText = selftext,
             selfUrl = url,
-            isVideo = isVideo,
             id = id,
             isLikedByUser = likes
         )
+        if (url.endsWith(".jpg") || url.endsWith(".png")) return post.toImagePostEntity(url)
+        if (selftext.isNotBlank()) return post.toTextPostEntity(selftext)
+        return post
     }
 }

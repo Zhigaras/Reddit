@@ -5,11 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.bumptech.glide.Glide
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.PostItemBinding
+import com.zhigaras.reddit.domain.model.ImagePostEntity
 import com.zhigaras.reddit.domain.model.PostEntity
+import com.zhigaras.reddit.domain.model.TextPostEntity
 
 class PostViewGroup @JvmOverloads constructor(
     context: Context,
@@ -49,6 +55,20 @@ class PostViewGroup @JvmOverloads constructor(
             subreddit.text = post.subreddit
             author.text = post.author
             title.text = post.title
+            
+            
+            if (post is TextPostEntity) {
+                contentTextView.visibility = View.VISIBLE
+                contentTextView.text = post.selfText
+                contentImageView.visibility = View.GONE
+            }
+            if (post is ImagePostEntity) {
+                contentImageView.visibility = View.VISIBLE
+                Glide.with(contentImageView)
+                    .load(post.imageUrl)
+                    .into(contentImageView)
+                contentTextView.visibility = View.GONE
+            }
         }
     }
     
