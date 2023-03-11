@@ -7,5 +7,7 @@ data class SubredditEntity(
     val subscribers: Int,
     val userIsSubscriber: Boolean,
     val publicDescription: String,
-    val logo: String
+    val bannerImage: String,
+    val bannerColor: String,
+    val subredditIcon: String
 ): AbstractRedditEntity()

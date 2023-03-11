@@ -44,12 +44,12 @@ data class SubredditModel(
 //    val allowVideos: Boolean,
 //    @Json(name = "allowed_media_in_comments")
 //    val allowedMediaInComments: List<String>,
-//    @Json(name = "banner_background_color")
-//    val bannerBackgroundColor: String,
+    @Json(name = "banner_background_color")
+    val bannerBackgroundColor: String,
 //    @Json(name = "banner_background_image")
 //    val bannerBackgroundImage: String,
-    @Json(name = "banner_img")
-    val bannerImg: String?,
+//    @Json(name = "banner_img"`)
+//    val bannerImg: String,`
 //    @Json(name = "banner_size")
 //    val bannerSize: Any,
 //    @Json(name = "can_assign_link_flair")
@@ -96,8 +96,8 @@ data class SubredditModel(
 //    val headerTitle: String,
 //    @Json(name = "hide_ads")
 //    val hideAds: Boolean,
-//    @Json(name = "icon_img")
-//    val iconImg: String,
+    @Json(name = "icon_img")
+    val iconImg: String,
 //    @Json(name = "icon_size")
 //    val iconSize: Any,
     @Json(name = "id")
@@ -116,8 +116,8 @@ data class SubredditModel(
 //    val linkFlairEnabled: Boolean,
 //    @Json(name = "link_flair_position")
 //    val linkFlairPosition: String,
-//    @Json(name = "mobile_banner_image")
-//    val mobileBannerImage: String,
+    @Json(name = "mobile_banner_image")
+    val mobileBannerImage: String,
 //    @Json(name = "name")
 //    val name: String,
 //    @Json(name = "notification_level")
@@ -226,7 +226,9 @@ data class SubredditModel(
             subscribers = subscribers,
             userIsSubscriber = userIsSubscriber,
             publicDescription = publicDescription,
-            logo = bannerImg ?: ""
+            bannerImage = mobileBannerImage,
+            bannerColor = bannerBackgroundColor,
+            subredditIcon = iconImg
         )
     }
 }
