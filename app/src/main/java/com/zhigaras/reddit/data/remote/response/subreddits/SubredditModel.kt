@@ -4,6 +4,7 @@ package com.zhigaras.reddit.data.remote.response.subreddits
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.zhigaras.reddit.data.remote.response.MapData
+import com.zhigaras.reddit.domain.formatDecimalSeparator
 import com.zhigaras.reddit.domain.model.SubredditEntity
 
 @JsonClass(generateAdapter = true)
@@ -48,8 +49,8 @@ data class SubredditModel(
     val bannerBackgroundColor: String,
 //    @Json(name = "banner_background_image")
 //    val bannerBackgroundImage: String,
-//    @Json(name = "banner_img"`)
-//    val bannerImg: String,`
+    @Json(name = "banner_img")
+    val bannerImg: String?,
 //    @Json(name = "banner_size")
 //    val bannerSize: Any,
 //    @Json(name = "can_assign_link_flair")
@@ -223,10 +224,10 @@ data class SubredditModel(
             id = id,
             displayNamePrefixed = displayNamePrefixed,
             displayName = displayName,
-            subscribers = subscribers,
+            subscribers = subscribers.formatDecimalSeparator(),
             userIsSubscriber = userIsSubscriber,
             publicDescription = publicDescription,
-            bannerImage = mobileBannerImage,
+            bannerImage = bannerImg ?: "",
             bannerColor = bannerBackgroundColor,
             subredditIcon = iconImg
         )

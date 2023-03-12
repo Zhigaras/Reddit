@@ -4,7 +4,7 @@ data class SubredditEntity(
     val id: String,
     val displayNamePrefixed: String,
     val displayName: String,
-    val subscribers: Int,
+    val subscribers: String,
     val userIsSubscriber: Boolean,
     val publicDescription: String,
     val bannerImage: String,

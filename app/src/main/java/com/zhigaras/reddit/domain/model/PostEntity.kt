@@ -14,6 +14,10 @@ open class PostEntity(
 ) : AbstractRedditEntity() {
     
     
+    override fun equals(other: Any?): Boolean {
+        return other is PostEntity && id == other.id
+    }
+    
     fun toImagePostEntity(imageUtl: String): ImagePostEntity {
         return ImagePostEntity(
             id = id,

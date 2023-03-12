@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.zhigaras.reddit.Constants
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditsGenericBinding
+import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
@@ -28,10 +30,16 @@ abstract class AbstractSubredditsFragment : Fragment() {
     
     abstract fun observePagerFlow()
     
-    fun navigateToPosts(subredditId: String) {
+    fun navigateToPosts(subreddit: SubredditEntity) {
         findNavController().navigate(
             R.id.from_main_subreddits_to_posts,
-            Bundle().also { it.putString("subredditId", subredditId) }
+            Bundle().also {
+                it.putString(Constants.KEY_SUBREDDIT_ICON, subreddit.subredditIcon)
+                it.putString(Constants.KEY_SUBREDDIT_BANNER, subreddit.bannerImage)
+                it.putString(Constants.KEY_SUBREDDIT_BANNER_COLOR, subreddit.bannerColor)
+                it.putString(Constants.KEY_SUBREDDIT_NAME, subreddit.displayName)
+                it.putString(Constants.KEY_SUBSCRIBERS, subreddit.subscribers)
+            }
         )
     }
     

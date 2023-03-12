@@ -1,6 +1,7 @@
 package com.zhigaras.reddit.presentation.screens.subreddits
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
+import com.zhigaras.reddit.Constants
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditPostsBinding
 import com.zhigaras.reddit.presentation.UiText
+import com.zhigaras.reddit.presentation.paging.HeaderAdapter
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.PostsPageAdapter
@@ -26,6 +31,7 @@ class SubredditPostsFragment : Fragment() {
     private var _binding: FragmentSubredditPostsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SubredditPostsViewModel by viewModels()
+    private val headerAdapter = HeaderAdapter()
     private val postsPageAdapter = PostsPageAdapter(
         onPostClick = { onPostClick() },
         onCommentsClick = { onCommentsClick() },
@@ -43,6 +49,8 @@ class SubredditPostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        val args = arguments
+        if (args != null) headerAdapter.setData(args)
         
         setUpPageAdapter()
         setupLoadStates()
@@ -56,7 +64,11 @@ class SubredditPostsFragment : Fragment() {
     }
     
     fun setUpPageAdapter() {
-        binding.recyclerView.adapter = postsPageAdapter.withLoadStateFooter(PageLoadStateAdapter())
+        val concatAdapter = ConcatAdapter(
+            headerAdapter,
+            postsPageAdapter.withLoadStateFooter(PageLoadStateAdapter())
+        )
+        binding.recyclerView.adapter = concatAdapter
     }
     
     fun setupLoadStates() {
@@ -79,7 +91,7 @@ class SubredditPostsFragment : Fragment() {
     }
     
     fun observePagerFlow() { //TODO(pop backStack if arguments = null)
-        viewModel.getPagedPosts(arguments?.getString("subredditId") ?: "").onEach {
+        viewModel.getPagedPosts(arguments?.getString(Constants.KEY_SUBREDDIT_NAME) ?: "").onEach {
             postsPageAdapter.submitData(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

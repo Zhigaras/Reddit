@@ -13,7 +13,7 @@ import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
 class SubredditsPageAdapter(
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (SubredditEntity) -> Unit
 ) : PagingDataAdapter<SubredditEntity, SubredditViewHolder>(SubredditsDiffUtilCallback()) {
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
@@ -23,9 +23,9 @@ class SubredditsPageAdapter(
             description.text = item.publicDescription
             subscribers.text = UiText.ResourceString(
                 R.string.subscribed,
-                item.subscribers.formatDecimalSeparator()
-            )
-                .asString(holder.itemView.context)
+                item.subscribers
+            ).asString(holder.itemView.context)
+            
             if (item.userIsSubscriber) {
                 followButton.apply {
                     setImageResource(R.drawable.ic_unfollow)
@@ -39,12 +39,12 @@ class SubredditsPageAdapter(
                 }
             }
             Glide.with(logo.context)
-                .load(item.logo)
+                .load(item.subredditIcon)
                 .placeholder(R.drawable.reddit_placeholder)
                 .circleCrop()
                 .into(logo)
             root.setOnClickListener {
-                onItemClick(item.displayName)
+                onItemClick(item)
             }
         }
     }
