@@ -7,7 +7,6 @@ import com.zhigaras.reddit.data.remote.SafeRemoteRepo
 import com.zhigaras.reddit.data.remote.response.CommonResponse
 import com.zhigaras.reddit.data.remote.response.posts.PostModel
 import com.zhigaras.reddit.data.remote.response.subreddits.SubredditModel
-import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.domain.model.ImagePostEntity
 import com.zhigaras.reddit.domain.model.PostEntity
 import com.zhigaras.reddit.domain.model.SubredditEntity
@@ -55,8 +54,11 @@ class MainRepository @Inject constructor(
         return redditApi.searchSubreddits(query)
     }
     
-    suspend fun vote(id: String, direction: Int): ApiResult<Nothing> {
-        return safeApiCall { redditApi.vote(id, direction) }
-    }
+//    suspend fun vote(id: String, direction: Int): ApiResult<Unit> {
+//        return safeApiCall { redditApi.vote(id, direction) }
+//    }
     
+    suspend fun subscribeUnsubscribe(action: String, displayName: String) {
+        return redditApi.subscribeUnsubscribe(action, displayName)
+    }
 }

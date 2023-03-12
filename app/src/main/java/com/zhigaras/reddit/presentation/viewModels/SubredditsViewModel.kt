@@ -8,6 +8,7 @@ import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.Communication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,5 +29,15 @@ class SubredditsViewModel @Inject constructor(
     
     suspend fun observe(collector: FlowCollector<SubredditEntity?>) {
         communication.observe(collector)
+    }
+    
+    fun subscribeUnsubscribe(displayName: String, isUserSubscriber: Boolean) {
+        viewModelScope.launch {
+            if (isUserSubscriber) {
+                mainRepository.subscribeUnsubscribe("unsub", displayName)
+            } else {
+                mainRepository.subscribeUnsubscribe("sub", displayName)
+            }
+        }
     }
 }

@@ -26,7 +26,15 @@ abstract class AbstractSubredditsFragment : Fragment() {
     private val viewModel: SubredditsViewModel by activityViewModels()
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
-    private val subredditsPageAdapter = SubredditsPageAdapter { onSubredditClick(it) }
+    private val subredditsPageAdapter = SubredditsPageAdapter(
+        onItemClick = { onSubredditClick(it) },
+        onSubscribeClick = { name, isSubscribed ->
+            viewModel.subscribeUnsubscribe(
+                name,
+                isSubscribed
+            )
+        }
+    )
     abstract val apiQuery: String
     
     fun observePagerFlow() {

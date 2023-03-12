@@ -16,9 +16,9 @@
 
     <fragment
         android:id="@+id/subreddit_posts"
-        android:name="com.zhigaras.reddit.presentation.screens.subreddits.SubredditPostsFragment"
+        android:name="com.zhigaras.reddit.presentation.screens.subreddits.PostsFragment"
         android:label="Subreddit Posts"
-        android:layout="@layout/fragment_subreddit_posts">
+        android:layout="@layout/fragment_posts">
         <action
             android:id="@+id/from_subreddit_posts_to_single_post"
             app:destination="@+id/subreddit_single_post" />

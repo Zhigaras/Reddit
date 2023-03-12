@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.zhigaras.reddit.R
-import com.zhigaras.reddit.databinding.FragmentSubredditPostsBinding
+import com.zhigaras.reddit.databinding.FragmentPostsBinding
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.HeaderAdapter
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
@@ -23,12 +23,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class SubredditPostsFragment : Fragment() {
+class PostsFragment : Fragment() {
     
-    private var _binding: FragmentSubredditPostsBinding? = null
+    private var _binding: FragmentPostsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SubredditsViewModel by activityViewModels()
-    private val headerAdapter = HeaderAdapter()
+    private val headerAdapter = HeaderAdapter(
+        onSubscribeClick = { name, isSubscribed -> viewModel.subscribeUnsubscribe(name, isSubscribed)}
+    )
     private val postsPageAdapter = PostsPageAdapter(
         onPostClick = { onPostClick() },
         onCommentsClick = { onCommentsClick() },
@@ -39,7 +41,7 @@ class SubredditPostsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSubredditPostsBinding.inflate(inflater, container, false)
+        _binding = FragmentPostsBinding.inflate(inflater, container, false)
         return binding.root
     }
     

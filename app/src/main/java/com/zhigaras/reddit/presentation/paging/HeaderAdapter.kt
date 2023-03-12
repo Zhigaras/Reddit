@@ -11,7 +11,9 @@ import com.zhigaras.reddit.databinding.SubredditHeaderLayoutBinding
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
-class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
+class HeaderAdapter(
+    private val onSubscribeClick: (String, Boolean) -> Unit
+) : Adapter<HeaderAdapter.HeaderViewHolder>() {
     
     class HeaderViewHolder(val binding: SubredditHeaderLayoutBinding) : ViewHolder(binding.root)
     
@@ -70,6 +72,9 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
             joinButton.text = if (data.userIsSubscriber) UiText.ResourceString(R.string.leave)
                 .asString(context)
             else UiText.ResourceString(R.string.join).asString(context)
+            joinButton.setOnClickListener {
+                onSubscribeClick(name, data.userIsSubscriber)
+            }
         }
     }
 }

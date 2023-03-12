@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.SubredditItemBinding
-import com.zhigaras.reddit.domain.formatDecimalSeparator
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
 class SubredditsPageAdapter(
-    private val onItemClick: (SubredditEntity) -> Unit
+    private val onItemClick: (SubredditEntity) -> Unit,
+    private val onSubscribeClick: (String, Boolean) -> Unit
 ) : PagingDataAdapter<SubredditEntity, SubredditViewHolder>(SubredditsDiffUtilCallback()) {
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
@@ -45,6 +45,9 @@ class SubredditsPageAdapter(
                 .into(logo)
             root.setOnClickListener {
                 onItemClick(item)
+            }
+            followButton.setOnClickListener {
+                onSubscribeClick(item.displayName, item.userIsSubscriber)
             }
         }
     }

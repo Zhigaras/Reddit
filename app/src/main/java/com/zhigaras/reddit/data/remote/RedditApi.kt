@@ -40,5 +40,11 @@ interface RedditApi {
     suspend fun vote(
         @Query("id") id: String,
         @Query("dir") direction: Int
-    ): Response<Nothing>
+    )
+    
+    @POST("/api/subscribe")
+    suspend fun subscribeUnsubscribe(
+        @Query("action") action: String,
+        @Query("sr_name") displayName: String
+    )
 }
