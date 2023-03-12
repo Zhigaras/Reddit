@@ -25,4 +25,5 @@
     <string name="check_connection">Проверьте соединение с интернетом</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="join">Присоединиться</string>
+    <string name="leave">Покинуть</string>
 </resources>

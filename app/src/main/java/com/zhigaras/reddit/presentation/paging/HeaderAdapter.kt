@@ -15,7 +15,7 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
     
     class HeaderViewHolder(val binding: SubredditHeaderLayoutBinding) : ViewHolder(binding.root)
     
-    private var data: SubredditEntity? = null
+    private lateinit var data: SubredditEntity
     
     fun setData(subreddit: SubredditEntity) {
         this.data = subreddit
@@ -33,11 +33,12 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
     
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         
-        val bannerUrl = data?.bannerImage ?: ""
-        val bannerColor = data?.bannerColor ?: ""
-        val icon = data?.subredditIcon ?: ""
-        val name = data?.displayName ?: ""
-        val subs = data?.subscribers ?: ""
+        val context = holder.binding.root.context
+        val bannerUrl = data.bannerImage
+        val bannerColor = data.bannerColor
+        val icon = data.subredditIcon
+        val name = data.displayName
+        val subs = data.subscribers
         
         with(holder.binding) {
             
@@ -45,13 +46,13 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
                 banner.setBackgroundColor(Color.parseColor(bannerColor))
             }
             if (bannerUrl.isNotBlank()) {
-                banner.setBackgroundColor(banner.context.getColor(R.color.transparent))
-                Glide.with(banner)
+                banner.setBackgroundColor(context.getColor(R.color.transparent))
+                Glide.with(context)
                     .load(bannerUrl)
                     .into(banner)
             }
             if (icon.isNotBlank()) {
-                Glide.with(logo)
+                Glide.with(context)
                     .load(icon)
                     .into(logo)
             } else {
@@ -64,8 +65,11 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
                 subscribers.text = UiText.ResourceString(
                     R.string.subscribed,
                     subs
-                ).asString(subscribers.context)
+                ).asString(context)
             }
+            joinButton.text = if (data.userIsSubscriber) UiText.ResourceString(R.string.leave)
+                .asString(context)
+            else UiText.ResourceString(R.string.join).asString(context)
         }
     }
 }
