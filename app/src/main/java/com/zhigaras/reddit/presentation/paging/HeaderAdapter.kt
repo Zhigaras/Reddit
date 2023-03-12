@@ -1,25 +1,24 @@
 package com.zhigaras.reddit.presentation.paging
 
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.zhigaras.reddit.Constants
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.SubredditHeaderLayoutBinding
+import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
 class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
     
     class HeaderViewHolder(val binding: SubredditHeaderLayoutBinding) : ViewHolder(binding.root)
     
-    private var data = Bundle()
+    private var data: SubredditEntity? = null
     
-    fun setData(data: Bundle) {
-        this.data = data
+    fun setData(subreddit: SubredditEntity) {
+        this.data = subreddit
     }
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
@@ -34,11 +33,11 @@ class HeaderAdapter : Adapter<HeaderAdapter.HeaderViewHolder>() {
     
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         
-        val bannerUrl = data.getString(Constants.KEY_SUBREDDIT_BANNER, "")
-        val bannerColor = data.getString(Constants.KEY_SUBREDDIT_BANNER_COLOR, "")
-        val icon = data.getString(Constants.KEY_SUBREDDIT_ICON, "")
-        val name = data.getString(Constants.KEY_SUBREDDIT_NAME, "")
-        val subs = data.getString(Constants.KEY_SUBSCRIBERS, "")
+        val bannerUrl = data?.bannerImage ?: ""
+        val bannerColor = data?.bannerColor ?: ""
+        val icon = data?.subredditIcon ?: ""
+        val name = data?.displayName ?: ""
+        val subs = data?.subscribers ?: ""
         
         with(holder.binding) {
             

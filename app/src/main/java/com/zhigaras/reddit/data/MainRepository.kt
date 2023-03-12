@@ -1,16 +1,20 @@
 package com.zhigaras.reddit.data
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.zhigaras.reddit.data.locale.DataStoreManager
 import com.zhigaras.reddit.data.remote.RedditApi
 import com.zhigaras.reddit.data.remote.SafeRemoteRepo
 import com.zhigaras.reddit.data.remote.response.CommonResponse
-import com.zhigaras.reddit.data.remote.response.Thing
+import com.zhigaras.reddit.data.remote.response.posts.PostModel
+import com.zhigaras.reddit.data.remote.response.subreddits.SubredditModel
 import com.zhigaras.reddit.domain.ApiResult
+import com.zhigaras.reddit.domain.model.ImagePostEntity
+import com.zhigaras.reddit.domain.model.PostEntity
+import com.zhigaras.reddit.domain.model.SubredditEntity
+import com.zhigaras.reddit.domain.model.TextPostEntity
 import com.zhigaras.reddit.presentation.paging.GenericPagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -19,23 +23,25 @@ class MainRepository @Inject constructor(
     private val redditApi: RedditApi
 ) : SafeRemoteRepo.BaseRemoteRepo() {
     
-    fun getPagedSubredditsFlow(query: String): Flow<PagingData<Thing>> = Pager(
+    fun getPagedSubredditsFlow(query: String): Flow<PagingData<SubredditEntity>> = Pager(
         config = PagingConfig(pageSize = 25),
         pagingSourceFactory = {
             GenericPagingSource { afterKey ->
                 redditApi.loadSubreddits(query, afterKey)
             }
         }
-    ).flow
+    ).flow.transform { pagingData -> emit(pagingData.map { (it.data as SubredditModel).map() }) }
     
-    fun getPagedPostsFlow(subredditId: String): Flow<PagingData<Thing>> = Pager(
+    fun getPagedPostsFlow(subredditName: String): Flow<PagingData<PostEntity>> = Pager(
         config = PagingConfig(pageSize = 25),
         pagingSourceFactory = {
             GenericPagingSource { afterKey ->
-                redditApi.loadSubredditPosts(subredditId, afterKey)
+                redditApi.loadSubredditPosts(subredditName, afterKey)
             }
         }
-    ).flow
+    ).flow.transform { pagingData -> emit(pagingData.map { (it.data as PostModel).map() }) }
+        .transform { pagingData -> emit(pagingData.filter { it is ImagePostEntity || it is TextPostEntity }) }
+    
     
     suspend fun saveAccessToken(token: String) {
         dataStoreManager.saveToken(token)

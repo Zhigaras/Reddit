@@ -7,20 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
-import com.zhigaras.reddit.Constants
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditPostsBinding
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.HeaderAdapter
-import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.PostsPageAdapter
-import com.zhigaras.reddit.presentation.viewModels.subreddits.SubredditPostsViewModel
+import com.zhigaras.reddit.presentation.viewModels.SubredditsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +27,7 @@ class SubredditPostsFragment : Fragment() {
     
     private var _binding: FragmentSubredditPostsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SubredditPostsViewModel by viewModels()
+    private val viewModel: SubredditsViewModel by activityViewModels()
     private val headerAdapter = HeaderAdapter()
     private val postsPageAdapter = PostsPageAdapter(
         onPostClick = { onPostClick() },
@@ -49,12 +46,9 @@ class SubredditPostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        val args = arguments
-        if (args != null) headerAdapter.setData(args)
-        
+        observeSelectedSubreddit()
         setUpPageAdapter()
         setupLoadStates()
-        observePagerFlow()
         
     }
     
@@ -90,8 +84,21 @@ class SubredditPostsFragment : Fragment() {
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
     
-    fun observePagerFlow() { //TODO(pop backStack if arguments = null)
-        viewModel.getPagedPosts(arguments?.getString(Constants.KEY_SUBREDDIT_NAME) ?: "").onEach {
+    fun observeSelectedSubreddit() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.observe { subreddit ->
+                subreddit?.let {
+                    Log.d("AAA", it.toString())
+                    observePagerFlow(it.displayName)
+                    headerAdapter.setData(it)
+                    //TODO(повторная загрузка по возвращению назад)
+                }
+            }
+        }
+    }
+    
+    fun observePagerFlow(subredditName: String) {
+        viewModel.getPagedPosts(subredditName).onEach {
             postsPageAdapter.submitData(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

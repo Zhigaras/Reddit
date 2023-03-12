@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.zhigaras.reddit.Constants
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditsGenericBinding
 import com.zhigaras.reddit.domain.model.SubredditEntity
@@ -18,29 +17,27 @@ import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.SubredditsPageAdapter
+import com.zhigaras.reddit.presentation.viewModels.SubredditsViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 abstract class AbstractSubredditsFragment : Fragment() {
     
-    protected abstract val viewModel: ViewModel
+    private val viewModel: SubredditsViewModel by activityViewModels()
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
-    protected val subredditsPageAdapter = SubredditsPageAdapter { navigateToPosts(it) }
+    private val subredditsPageAdapter = SubredditsPageAdapter { onSubredditClick(it) }
+    abstract val apiQuery: String
     
-    abstract fun observePagerFlow()
+    fun observePagerFlow() {
+        viewModel.getPagedSubreddits(apiQuery).onEach {
+            subredditsPageAdapter.submitData(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
     
-    fun navigateToPosts(subreddit: SubredditEntity) {
-        findNavController().navigate(
-            R.id.from_main_subreddits_to_posts,
-            Bundle().also {
-                it.putString(Constants.KEY_SUBREDDIT_ICON, subreddit.subredditIcon)
-                it.putString(Constants.KEY_SUBREDDIT_BANNER, subreddit.bannerImage)
-                it.putString(Constants.KEY_SUBREDDIT_BANNER_COLOR, subreddit.bannerColor)
-                it.putString(Constants.KEY_SUBREDDIT_NAME, subreddit.displayName)
-                it.putString(Constants.KEY_SUBSCRIBERS, subreddit.subscribers)
-            }
-        )
+    fun onSubredditClick(subreddit: SubredditEntity) {
+        viewModel.saveSelectedSubreddit(subreddit)
+        findNavController().navigate(R.id.from_main_subreddits_to_posts)
     }
     
     override fun onCreateView(

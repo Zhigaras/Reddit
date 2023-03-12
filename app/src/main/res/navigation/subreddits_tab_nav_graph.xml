@@ -22,24 +22,6 @@
         <action
             android:id="@+id/from_subreddit_posts_to_single_post"
             app:destination="@+id/subreddit_single_post" />
-        <argument
-            android:name="subredditId"
-            app:argType="string"/>
-        <argument
-            android:name="subredditLogo"
-            app:argType="string"/>
-        <argument
-            android:name="subredditBanner"
-            app:argType="string"/>
-        <argument
-            android:name="subredditBannerColor"
-            app:argType="string"/>
-        <argument
-            android:name="subredditName"
-            app:argType="string"/>
-        <argument
-            android:name="subscribers"
-            app:argType="string"/>
     </fragment>
 
     <fragment
