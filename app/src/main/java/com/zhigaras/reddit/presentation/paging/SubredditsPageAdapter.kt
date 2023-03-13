@@ -13,8 +13,15 @@ import com.zhigaras.reddit.presentation.UiText
 
 class SubredditsPageAdapter(
     private val onItemClick: (SubredditEntity) -> Unit,
-    private val onSubscribeClick: (String, Boolean) -> Unit
+    private val onSubscribeClick: (String, Boolean, Int) -> Unit
 ) : PagingDataAdapter<SubredditEntity, SubredditViewHolder>(SubredditsDiffUtilCallback()) {
+    
+    fun updateSubscription(position: Int) {
+        snapshot()[position]?.let {
+            it.userIsSubscriber = !it.userIsSubscriber
+        }
+        notifyItemChanged(position)
+    }
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
         val item = getItem(position) ?: return
@@ -47,7 +54,7 @@ class SubredditsPageAdapter(
                 onItemClick(item)
             }
             followButton.setOnClickListener {
-                onSubscribeClick(item.displayName, item.userIsSubscriber)
+                onSubscribeClick(item.displayName, item.userIsSubscriber, position)
             }
         }
     }

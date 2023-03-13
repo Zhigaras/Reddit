@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentPostsBinding
+import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.HeaderAdapter
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
@@ -29,7 +30,7 @@ class PostsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SubredditsViewModel by activityViewModels()
     private val headerAdapter = HeaderAdapter(
-        onSubscribeClick = { name, isSubscribed -> viewModel.subscribeUnsubscribe(name, isSubscribed)}
+        onSubscribeClick = { name, isSubscribed, position -> viewModel.subscribeUnsubscribe(name, isSubscribed, position)}
     )
     private val postsPageAdapter = PostsPageAdapter(
         onPostClick = { onPostClick() },
@@ -51,6 +52,7 @@ class PostsFragment : Fragment() {
         observeSelectedSubreddit()
         setUpPageAdapter()
         setupLoadStates()
+        observeClickResult()
         
     }
     
@@ -88,12 +90,25 @@ class PostsFragment : Fragment() {
     
     fun observeSelectedSubreddit() {
         lifecycleScope.launchWhenStarted {
-            viewModel.observe { subreddit ->
+            viewModel.observeSelectedSubreddit { subreddit ->
                 subreddit?.let {
                     Log.d("AAA", it.toString())
                     observePagerFlow(it.displayName)
                     headerAdapter.setData(it)
                     //TODO(повторная загрузка по возвращению назад)
+                }
+            }
+        }
+    }
+    
+    fun observeClickResult() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.observeClickResult {
+                Log.d("AAA", "fragment $it")
+                if (it is ApiResult.Loading) binding.progressBar.visibility = View.VISIBLE
+                else {
+                    headerAdapter.updateSubscription()
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

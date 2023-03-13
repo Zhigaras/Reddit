@@ -5,7 +5,7 @@ data class SubredditEntity(
     val displayNamePrefixed: String,
     val displayName: String,
     val subscribers: String,
-    val userIsSubscriber: Boolean,
+    var userIsSubscriber: Boolean,
     val publicDescription: String,
     val bannerImage: String,
     val bannerColor: String,

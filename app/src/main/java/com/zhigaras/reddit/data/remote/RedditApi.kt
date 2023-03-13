@@ -46,5 +46,5 @@ interface RedditApi {
     suspend fun subscribeUnsubscribe(
         @Query("action") action: String,
         @Query("sr_name") displayName: String
-    )
+    ): Response<Unit>
 }

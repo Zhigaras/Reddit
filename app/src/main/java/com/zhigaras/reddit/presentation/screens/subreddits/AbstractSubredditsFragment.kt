@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentSubredditsGenericBinding
+import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
@@ -28,10 +29,11 @@ abstract class AbstractSubredditsFragment : Fragment() {
     private val binding get() = _binding!!
     private val subredditsPageAdapter = SubredditsPageAdapter(
         onItemClick = { onSubredditClick(it) },
-        onSubscribeClick = { name, isSubscribed ->
+        onSubscribeClick = { name, isSubscribed, position ->
             viewModel.subscribeUnsubscribe(
                 name,
-                isSubscribed
+                isSubscribed,
+                position
             )
         }
     )
@@ -41,6 +43,19 @@ abstract class AbstractSubredditsFragment : Fragment() {
         viewModel.getPagedSubreddits(apiQuery).onEach {
             subredditsPageAdapter.submitData(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+    
+    fun observeClickResult() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.observeClickResult {
+                if (it is ApiResult.Loading) {
+                } else {
+                    it?.data?.let {
+                        subredditsPageAdapter.updateSubscription(position = it)
+                    }
+                }
+            }
+        }
     }
     
     fun onSubredditClick(subreddit: SubredditEntity) {
@@ -62,6 +77,7 @@ abstract class AbstractSubredditsFragment : Fragment() {
         setUpPageAdapter()
         setupLoadStates()
         observePagerFlow()
+        observeClickResult()
     }
     
     override fun onDestroy() {
