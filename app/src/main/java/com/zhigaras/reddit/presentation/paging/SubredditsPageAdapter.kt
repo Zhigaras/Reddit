@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.SubredditItemBinding
+import com.zhigaras.reddit.domain.ApiResult
+import com.zhigaras.reddit.domain.model.IsSubscriber
 import com.zhigaras.reddit.domain.model.SubredditEntity
 import com.zhigaras.reddit.presentation.UiText
 
@@ -16,11 +18,20 @@ class SubredditsPageAdapter(
     private val onSubscribeClick: (String, Boolean, Int) -> Unit
 ) : PagingDataAdapter<SubredditEntity, SubredditViewHolder>(SubredditsDiffUtilCallback()) {
     
-    fun updateSubscription(position: Int) {
-        snapshot()[position]?.let {
-            it.userIsSubscriber = !it.userIsSubscriber
+    fun updateElement(data: ApiResult<Int>) {
+        data.data?.let { position ->
+            snapshot()[position]?.let { subreddit ->
+                subreddit.userIsSubscriber = when (data) {
+                    is ApiResult.Loading -> IsSubscriber(
+                        subreddit.userIsSubscriber.isSubscribed,
+                        true
+                    )
+                    else -> IsSubscriber(!subreddit.userIsSubscriber.isSubscribed, false)
+                }
+                
+            }
+            notifyItemChanged(position)
         }
-        notifyItemChanged(position)
     }
     
     override fun onBindViewHolder(holder: SubredditViewHolder, position: Int) {
@@ -33,18 +44,29 @@ class SubredditsPageAdapter(
                 item.subscribers
             ).asString(holder.itemView.context)
             
-            if (item.userIsSubscriber) {
+            if (item.userIsSubscriber.isLoading) {
                 followButton.apply {
-                    setImageResource(R.drawable.ic_unfollow)
-                    setColorFilter(context.getColor(R.color.red))
+                    isEnabled = false
+                    setColorFilter(context.getColor(R.color.dark_grey))
                 }
-                
             } else {
-                followButton.apply {
-                    setImageResource(R.drawable.ic_follow)
-                    setColorFilter(context.getColor(R.color.green))
+                if (item.userIsSubscriber.isSubscribed) {
+                    followButton.apply {
+                        setImageResource(R.drawable.ic_unfollow)
+                        setColorFilter(context.getColor(R.color.red))
+                    }
+                } else {
+                    followButton.apply {
+                        setImageResource(R.drawable.ic_follow)
+                        setColorFilter(context.getColor(R.color.green))
+                    }
                 }
             }
+            
+            followButton.setOnClickListener {
+                onSubscribeClick(item.displayName, item.userIsSubscriber.isSubscribed, position)
+            }
+            
             Glide.with(logo.context)
                 .load(item.subredditIcon)
                 .placeholder(R.drawable.reddit_placeholder)
@@ -52,9 +74,6 @@ class SubredditsPageAdapter(
                 .into(logo)
             root.setOnClickListener {
                 onItemClick(item)
-            }
-            followButton.setOnClickListener {
-                onSubscribeClick(item.displayName, item.userIsSubscriber, position)
             }
         }
     }

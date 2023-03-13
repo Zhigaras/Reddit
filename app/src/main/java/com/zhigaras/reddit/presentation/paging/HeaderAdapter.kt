@@ -1,10 +1,8 @@
 package com.zhigaras.reddit.presentation.paging
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
@@ -25,10 +23,9 @@ class HeaderAdapter(
         this.data = subreddit
     }
     
-    fun updateSubscription() {
-        data.userIsSubscriber = !data.userIsSubscriber
-        Log.d("AAA", "holder got")
-    }
+//    fun updateSubscription() {
+//        data.userIsSubscriber = data.userIsSubscriber
+//    }
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
         return HeaderViewHolder(
@@ -76,11 +73,11 @@ class HeaderAdapter(
                     subs
                 ).asString(context)
             }
-            joinButton.text = if (data.userIsSubscriber) UiText.ResourceString(R.string.leave)
+            joinButton.text = if (data.userIsSubscriber.isSubscribed) UiText.ResourceString(R.string.leave)
                 .asString(context)
             else UiText.ResourceString(R.string.join).asString(context)
             joinButton.setOnClickListener {
-                onSubscribeClick(name, data.userIsSubscriber, position)
+                onSubscribeClick(name, data.userIsSubscriber.isSubscribed, position)
             }
         }
     }

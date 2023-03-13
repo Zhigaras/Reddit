@@ -5,6 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.zhigaras.reddit.data.remote.response.MapData
 import com.zhigaras.reddit.domain.formatDecimalSeparator
+import com.zhigaras.reddit.domain.model.IsSubscriber
 import com.zhigaras.reddit.domain.model.SubredditEntity
 
 @JsonClass(generateAdapter = true)
@@ -225,7 +226,10 @@ data class SubredditModel(
             displayNamePrefixed = displayNamePrefixed,
             displayName = displayName,
             subscribers = subscribers.formatDecimalSeparator(),
-            userIsSubscriber = userIsSubscriber,
+            userIsSubscriber = IsSubscriber(
+                isSubscribed = userIsSubscriber,
+                isLoading = false
+            ),
             publicDescription = publicDescription,
             bannerImage = bannerImg ?: "",
             bannerColor = bannerBackgroundColor,

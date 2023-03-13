@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -18,13 +17,13 @@ import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.MarginItemDecoration
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.SubredditsPageAdapter
-import com.zhigaras.reddit.presentation.viewModels.SubredditsViewModel
+import com.zhigaras.reddit.presentation.viewModels.subreddits.AbstractSubredditsViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 abstract class AbstractSubredditsFragment : Fragment() {
     
-    private val viewModel: SubredditsViewModel by activityViewModels()
+    protected abstract val viewModel: AbstractSubredditsViewModel
     private var _binding: FragmentSubredditsGenericBinding? = null
     private val binding get() = _binding!!
     private val subredditsPageAdapter = SubredditsPageAdapter(
@@ -37,31 +36,6 @@ abstract class AbstractSubredditsFragment : Fragment() {
             )
         }
     )
-    abstract val apiQuery: String
-    
-    fun observePagerFlow() {
-        viewModel.getPagedSubreddits(apiQuery).onEach {
-            subredditsPageAdapter.submitData(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-    
-    fun observeClickResult() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.observeClickResult {
-                if (it is ApiResult.Loading) {
-                } else {
-                    it?.data?.let {
-                        subredditsPageAdapter.updateSubscription(position = it)
-                    }
-                }
-            }
-        }
-    }
-    
-    fun onSubredditClick(subreddit: SubredditEntity) {
-        viewModel.saveSelectedSubreddit(subreddit)
-        findNavController().navigate(R.id.from_main_subreddits_to_posts)
-    }
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -115,6 +89,33 @@ abstract class AbstractSubredditsFragment : Fragment() {
             }
             
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+    
+    fun observePagerFlow() {
+        viewModel.getPagedSubreddits().onEach {
+            subredditsPageAdapter.submitData(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+    
+    fun observeClickResult() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.subscribeChannel.collect { result ->
+                if (result is ApiResult.Error) {
+                    showToast(
+                        UiText.ResourceString(R.string.something_went_wrong)
+                            .asString(requireContext())
+                    )
+                } else {
+                    subredditsPageAdapter.updateElement(result)
+                }
+            }
+        }
+    }
+    
+    fun onSubredditClick(subreddit: SubredditEntity) {
+        findNavController().navigate(
+            R.id.from_main_subreddits_to_posts
+        )
     }
     
     fun showToast(msg: String) {

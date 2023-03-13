@@ -1,7 +1,6 @@
 package com.zhigaras.reddit.presentation.screens.subreddits
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,11 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentPostsBinding
-import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.HeaderAdapter
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
 import com.zhigaras.reddit.presentation.paging.PostsPageAdapter
-import com.zhigaras.reddit.presentation.viewModels.SubredditsViewModel
+import com.zhigaras.reddit.presentation.viewModels.PostsViesModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -28,7 +26,7 @@ class PostsFragment : Fragment() {
     
     private var _binding: FragmentPostsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SubredditsViewModel by activityViewModels()
+    private val viewModel: PostsViesModel by activityViewModels()
     private val headerAdapter = HeaderAdapter(
         onSubscribeClick = { name, isSubscribed, position -> viewModel.subscribeUnsubscribe(name, isSubscribed, position)}
     )
@@ -49,10 +47,13 @@ class PostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        observeSelectedSubreddit()
+
+    
+//        headerAdapter.setData(subreddit)
+//        observePagerFlow(subreddit.displayName)
         setUpPageAdapter()
         setupLoadStates()
-        observeClickResult()
+
         
     }
     
@@ -86,32 +87,6 @@ class PostsFragment : Fragment() {
             }
             
         }.launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-    
-    fun observeSelectedSubreddit() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.observeSelectedSubreddit { subreddit ->
-                subreddit?.let {
-                    Log.d("AAA", it.toString())
-                    observePagerFlow(it.displayName)
-                    headerAdapter.setData(it)
-                    //TODO(повторная загрузка по возвращению назад)
-                }
-            }
-        }
-    }
-    
-    fun observeClickResult() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.observeClickResult {
-                Log.d("AAA", "fragment $it")
-                if (it is ApiResult.Loading) binding.progressBar.visibility = View.VISIBLE
-                else {
-                    headerAdapter.updateSubscription()
-                    binding.progressBar.visibility = View.GONE
-                }
-            }
-        }
     }
     
     fun observePagerFlow(subredditName: String) {

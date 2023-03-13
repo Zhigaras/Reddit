@@ -41,7 +41,7 @@ class AuthViewModel @Inject constructor(
     
     suspend fun onAuthCodeReceived(tokenExchangeRequest: TokenRequest) {
         runCatching {
-            communication.map(ApiResult.Loading())
+            communication.map(ApiResult.Loading(null))
             AppAuth.performTokenRequestSuspend(
                 authService = authService,
                 tokenRequest = tokenExchangeRequest
