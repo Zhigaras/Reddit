@@ -113,8 +113,10 @@ abstract class AbstractSubredditsFragment : Fragment() {
     }
     
     fun onSubredditClick(subreddit: SubredditEntity) {
+        viewModel.saveCurrentSubreddit(subreddit)
         findNavController().navigate(
-            R.id.from_main_subreddits_to_posts
+            R.id.from_main_subreddits_to_posts,
+            Bundle().also { it.putString("subredditName", subreddit.displayName) }
         )
     }
     

@@ -1,7 +1,7 @@
 package com.zhigaras.reddit.domain.model
 
 open class PostEntity(
-    open val id: String,
+    override val id: String,
     open val author: String,
     open val date: String,
     open val title: String,

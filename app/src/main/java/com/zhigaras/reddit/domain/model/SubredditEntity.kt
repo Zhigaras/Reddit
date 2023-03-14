@@ -1,10 +1,17 @@
 package com.zhigaras.reddit.domain.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "subreddits")
 data class SubredditEntity(
-    val id: String,
+    @PrimaryKey
+    override val id: String,
     val displayNamePrefixed: String,
     val displayName: String,
     val subscribers: String,
+    @Embedded
     var userIsSubscriber: IsSubscriber,
     val publicDescription: String,
     val bannerImage: String,
@@ -14,5 +21,5 @@ data class SubredditEntity(
 
 data class IsSubscriber(
     val isSubscribed: Boolean,
-    val isLoading: Boolean
+    var isLoading: Boolean
 )

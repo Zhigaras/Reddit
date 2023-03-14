@@ -5,10 +5,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.zhigaras.reddit.data.locale.DataStoreManager
+import com.zhigaras.reddit.data.locale.db.CachedSubredditsDao
+import com.zhigaras.reddit.data.locale.db.CachedThingsDatabase
 import com.zhigaras.reddit.data.remote.AuthInterceptor
 import com.zhigaras.reddit.data.remote.RedditApi
 import com.zhigaras.reddit.data.remote.response.Thing
@@ -29,6 +32,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class DataModule {
+    
+    @Provides
+    @Singleton
+    fun providesCachedThingsDatabase(@ApplicationContext app: Context): CachedThingsDatabase {
+        return Room.databaseBuilder(
+            app,
+            CachedThingsDatabase::class.java,
+            CachedThingsDatabase.DATABASE_NAME
+        ).build()
+    }
+    
+    @Provides
+    fun providesCachedSubredditDao(db: CachedThingsDatabase): CachedSubredditsDao {
+        return db.getCachedSubredditsDao()
+    }
     
     @Provides
     @Singleton

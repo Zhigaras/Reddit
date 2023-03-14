@@ -12,6 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.zhigaras.reddit.R
 import com.zhigaras.reddit.databinding.FragmentPostsBinding
+import com.zhigaras.reddit.domain.ApiResult
 import com.zhigaras.reddit.presentation.UiText
 import com.zhigaras.reddit.presentation.paging.HeaderAdapter
 import com.zhigaras.reddit.presentation.paging.PageLoadStateAdapter
@@ -47,13 +48,14 @@ class PostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-
+        val currentSubredditName = arguments?.getString("subredditName") ?: ""
     
-//        headerAdapter.setData(subreddit)
-//        observePagerFlow(subreddit.displayName)
+    
+        observeSubredditUpdates(currentSubredditName)
+        observePagerFlow(currentSubredditName)
         setUpPageAdapter()
         setupLoadStates()
-
+        observeClickResult()
         
     }
     
@@ -94,6 +96,30 @@ class PostsFragment : Fragment() {
             postsPageAdapter.submitData(it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
+    
+    fun observeSubredditUpdates(currentSubredditId: String) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.getCurrentSubreddit(currentSubredditId).collect {
+                headerAdapter.setData(it)
+            }
+        }
+    }
+    
+    fun observeClickResult() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.subscribeChannel.collect { result ->
+                if (result is ApiResult.Error) {
+                    showToast(
+                        UiText.ResourceString(R.string.something_went_wrong)
+                            .asString(requireContext())
+                    )
+                } else {
+                    headerAdapter.updateSubscribeInfo(result)
+                }
+            }
+        }
+    }
+    
     
     fun onPostClick() {
     

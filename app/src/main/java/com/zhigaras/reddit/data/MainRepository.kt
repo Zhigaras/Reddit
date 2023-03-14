@@ -2,6 +2,7 @@ package com.zhigaras.reddit.data
 
 import androidx.paging.*
 import com.zhigaras.reddit.data.locale.DataStoreManager
+import com.zhigaras.reddit.data.locale.db.CachedSubredditsDao
 import com.zhigaras.reddit.data.remote.RedditApi
 import com.zhigaras.reddit.data.remote.SafeRemoteRepo
 import com.zhigaras.reddit.data.remote.response.CommonResponse
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val dataStoreManager: DataStoreManager.Base,
-    private val redditApi: RedditApi
+    private val redditApi: RedditApi,
+    private val cachedSubredditsDao: CachedSubredditsDao
 ) : SafeRemoteRepo.BaseRemoteRepo() {
     
     fun getPagedSubredditsFlow(query: String): Flow<PagingData<SubredditEntity>> = Pager(
@@ -42,6 +44,12 @@ class MainRepository @Inject constructor(
     ).flow.transform { pagingData -> emit(pagingData.map { (it.data as PostModel).map() }) }
         .transform { pagingData -> emit(pagingData.filter { it is ImagePostEntity || it is TextPostEntity }) }
     
+    
+    suspend fun saveCurrentSubreddit(subreddit: SubredditEntity) = cachedSubredditsDao.saveSubreddit(subreddit)
+    
+    fun getCurrentSubreddit(subredditName: String): Flow<SubredditEntity> {
+        return cachedSubredditsDao.getSubreddit(subredditName)
+    }
     
     suspend fun saveAccessToken(token: String) {
         dataStoreManager.saveToken(token)

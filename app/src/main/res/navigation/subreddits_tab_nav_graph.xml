@@ -12,6 +12,9 @@
         <action
             android:id="@+id/from_main_subreddits_to_posts"
             app:destination="@+id/subreddit_posts" />
+        <argument
+            android:name="subredditName"
+            app:argType="string"/>
     </fragment>
 
     <fragment
